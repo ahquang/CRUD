@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import "./App.css";
+import { GlobalProvider } from "./context/GlobalState";
+import CityCreate from "./container/City/CityCreate";
+import CityDetail from "./container/City/CityDetail";
+import CityList from "./container/City/CityList";
+import CityUpdate from "./container/City/CityUpdate";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalProvider>
+      <div className="App">
+        <Router>
+          <Routes>
+            <Route path="/create" element={<CityCreate />} />
+            <Route path="/list" element={<CityList />} />
+            <Route path="/update/:id" element={<CityUpdate />} />
+            <Route path="/detail/:id" element={<CityDetail />} />
+          </Routes>
+        </Router>
+      </div>
+    </GlobalProvider>
   );
 }
 
