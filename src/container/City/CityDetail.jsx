@@ -29,7 +29,7 @@ const CityDetail = () => {
     );
     setSelectedCity(selectedCity);
   }, [currentCityId, cities]);
-
+  console.log(selectedCity);
   const handleDeleteBtn = () => {
     deleteCity(selectedCity.id);
     navigate("/list");

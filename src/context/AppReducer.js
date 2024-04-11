@@ -19,16 +19,20 @@ export default function appReducer(state, action) {
         return city;
       });
 
-      return {
+      const newDataUpdate = {
         ...state,
         cities: updatedCities,
       };
+      handleSaveData(newDataUpdate);
+      return newDataUpdate
 
     case "DELETE_CITY":
-      return {
+      const newDataDelete = {
         ...state,
         cities: state.cities.filter((city) => city.id !== action.payload),
       };
+      handleSaveData(newDataDelete);
+      return newDataDelete;
 
     default:
       return state;

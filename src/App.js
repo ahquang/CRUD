@@ -12,6 +12,7 @@ function App() {
       <div className="App">
         <Router>
           <Routes>
+            <Route path="/" element={<CityList />} />
             <Route path="/create" element={<CityCreate />} />
             <Route path="/list" element={<CityList />} />
             <Route path="/update/:id" element={<CityUpdate />} />
