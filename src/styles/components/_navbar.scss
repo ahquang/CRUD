@@ -48,6 +48,7 @@
         }
 
         &__menu:hover {
+            padding: 10px;
             background-color: $hover-color;
             color: $text-color-secondary;
             font-weight: 700;

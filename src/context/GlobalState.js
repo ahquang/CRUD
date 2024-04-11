@@ -7,12 +7,42 @@ const dataLocalStorage = handleRenderData();
 
 const initialState = dataLocalStorage ? dataLocalStorage : {
   cities: [
-    // {
-    //   // id: 1,
-    //   // name: "Ha Noi",
-    //   // province: "Hai Phong",
-    //   // country: "Viet Nam",
-    // },
+    {
+      id: 1,
+      name: "Ha Noi",
+      province: "Hai Phong",
+      country: "Viet Nam",
+    },
+    {
+      id: 2,
+      name: "Ha Noi",
+      province: "Hai Phong",
+      country: "Viet Nam",
+    },
+    {
+      id: 3,
+      name: "Ha Noi",
+      province: "Hai Phong",
+      country: "Viet Nam",
+    },
+    {
+      id: 4,
+      name: "Ha Noi",
+      province: "Hai Phong",
+      country: "Viet Nam",
+    },
+    {
+      id: 5,
+      name: "Ha Noi",
+      province: "Hai Phong",
+      country: "Viet Nam",
+    },
+    {
+      id: 6,
+      name: "Ha Noi",
+      province: "Hai Phong",
+      country: "Viet Nam",
+    }
   ],
 };
 

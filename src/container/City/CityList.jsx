@@ -1,8 +1,7 @@
 import React, { useContext, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import NavBar from "../../components/NavBar/index.jsx";
-import Footer from "../../components/Footer/index.jsx";
+import Layout from "../../components/Layout/index.jsx";
 import PageBar from "../../components/PageBar/index.jsx";
 import MyButton from "../../components/MyButton/index.jsx";
 import Pagination from "../../components/Pagination/index.jsx";
@@ -17,17 +16,16 @@ const CityList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPageCount = Math.ceil(cities.length / PageSize) 
+  const totalPageCount = Math.ceil(cities.length / PageSize);
 
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return cities.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, cities]);
 
   return (
-    <div className="cities">
-      <NavBar />
+    <Layout>
       <div className="cities__main">
         <PageBar>
           <span>Home / Cities</span>
@@ -38,7 +36,9 @@ const CityList = () => {
         <div className="cities__main--btn">
           <MyButton onClick={() => navigate("/create")}>Create city</MyButton>
         </div>
-        <span className="cities__main--span">Showing {currentPage}-{totalPageCount} of {cities.length} items.</span>
+        <span className="cities__main--span">
+          Showing {currentPage}-{totalPageCount} of {cities.length} items.
+        </span>
         <table className="cities__main__list">
           <thead>
             <tr>
@@ -84,8 +84,7 @@ const CityList = () => {
           />
         </div>
       </div>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

@@ -33,8 +33,9 @@ export default function appReducer(state, action) {
       };
       handleSaveData(newDataDelete);
       return newDataDelete;
+      
 
     default:
-      return state;
+        return state;
   }
 }

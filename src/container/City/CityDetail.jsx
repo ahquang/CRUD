@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalState.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import NavBar from "../../components/NavBar/index.jsx";
-import Footer from "../../components/Footer/index.jsx";
+import Layout from "../../components/Layout/index.jsx";
 import PageBar from "../../components/PageBar/index.jsx";
 import MyButton from "../../components/MyButton/index.jsx";
 import "../../styles/pages/_cities.scss";
@@ -40,8 +39,7 @@ const CityDetail = () => {
   }
 
   return (
-    <div className="cities">
-      <NavBar />
+    <Layout>
       <div className="cities__main">
         <PageBar>
           <span>Home / Cities / {selectedCity.name}</span>
@@ -84,8 +82,7 @@ const CityDetail = () => {
           </table>
         </div>
       </div>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

@@ -2,10 +2,9 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalState.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import NavBar from "../../components/NavBar/index.jsx";
-import Footer from "../../components/Footer/index.jsx";
+import Layout from "../../components/Layout/index.jsx";
 import PageBar from "../../components/PageBar/index.jsx";
-import MyButton from "../../components/MyButton/index.jsx";
+import MyForm from "../../components/MyForm/index.jsx";
 import "../../styles/pages/_cities.scss";
 
 const CityCreate = () => {
@@ -13,26 +12,21 @@ const CityCreate = () => {
 
   const { addCity, cities } = useContext(GlobalContext);
 
-  const [name, setName] = useState("");
-  const [province, setProvince] = useState("");
-  const [country, setCountry] = useState("");
-
-  const newCity = {
+  const [newCity, setNewCity] = useState({
     id: cities.length + 1,
-    name,
-    province,
-    country,
-  };
+    name: "",
+    province: "",
+    country: "",
+  });
 
   const handleAddCity = (e) => {
     e.preventDefault();
     addCity(newCity);
     navigate("/list");
   };
-
+  
   return (
-    <div className="cities">
-      <NavBar />
+    <Layout>
       <div className="cities__main">
         <PageBar>
           <span>Home / Cities / Create City</span>
@@ -40,43 +34,9 @@ const CityCreate = () => {
         <div className="cities__main__title">
           <h1>Create City</h1>
         </div>
-        <div className="cities__main__create">
-          <form className="cities__main__create--form" onSubmit={handleAddCity}>
-            <div className="cities__main__create--form--input">
-              <label>Name</label>
-              <input
-                type="text"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                required
-              />
-            </div>
-            <div className="cities__main__create--form--input">
-              <label>Province</label>
-              <input
-                type="text"
-                onChange={(e) => setProvince(e.target.value)}
-                value={province}
-                required
-              />
-            </div>
-            <div className="cities__main__create--form--input">
-              <label>Country</label>
-              <input
-                type="text"
-                onChange={(e) => setCountry(e.target.value)}
-                value={country}
-                required
-              />
-            </div>
-            <div className="cities__main__create--form--button">
-              <MyButton>Save</MyButton>
-            </div>
-          </form>
-        </div>
+        <MyForm dataCity={newCity} setDataCity={setNewCity} onSubmit={handleAddCity}/>
       </div>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
