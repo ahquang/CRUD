@@ -5,7 +5,6 @@ export const handleRenderData = () => {
       return undefined;
     }
     return dataList;
-    console.log(dataList);
   } catch (error) {
     console.log(error);
   }

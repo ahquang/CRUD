@@ -1,4 +1,5 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext, useState, useMemo, useEffect } from "react";
+import { API_KEY, DEFAULT_PAGE_SIZE } from "../../constants/index.js";
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Layout from "../../components/Layout/index.jsx";
@@ -7,29 +8,55 @@ import MyButton from "../../components/MyButton/index.jsx";
 import Pagination from "../../components/Pagination/index.jsx";
 import "../../styles/pages/_cities.scss";
 import { GlobalContext } from "../../context/GlobalState.js";
-
-let PageSize = 5;
+import detailIcon from "../../assets/visibility_24px.svg";
+import deleteIcon from "../../assets/delete_24px.svg";
+import updateIcon from "../../assets/create_24px.svg";
+import { handleDeleteDataFromAPI } from "../../utils/handleAPIServices.js";
 
 const CityList = () => {
   const navigate = useNavigate();
-  const { cities, deleteCity } = useContext(GlobalContext);
+  // const { cities, deleteCity } = useContext(GlobalContext);
+  const [dataCity, setDataCity] = useState([]);
+
+  const fetchData = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    await fetch(`https://crudcrud.com/api/${API_KEY}/cities2`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setDataCity(data))
+      .catch((error) => console.log(error));
+    return dataCity;
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [page] = useState(["Home /", "Cities"]);
 
-  const totalPageCount = Math.ceil(cities.length / PageSize);
+  const handleClickPageBar = (e) => {
+    navigate("/");
+  };
+
+  const handleDeleteCity = async (id) => {
+    await handleDeleteDataFromAPI(id);
+    fetchData();
+  };
+  const totalPageCount = Math.ceil(dataCity.length / DEFAULT_PAGE_SIZE);
 
   const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    return cities.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, cities]);
+    const firstPageIndex = (currentPage - 1) * DEFAULT_PAGE_SIZE;
+    const lastPageIndex = firstPageIndex + DEFAULT_PAGE_SIZE;
+    return dataCity.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, dataCity]);
 
   return (
     <Layout>
       <div className="cities__main">
-        <PageBar>
-          <span>Home / Cities</span>
-        </PageBar>
+        <PageBar page={page} handleOnClick={handleClickPageBar} />
         <div className="cities__main__title">
           <h1>Cities</h1>
         </div>
@@ -37,7 +64,7 @@ const CityList = () => {
           <MyButton onClick={() => navigate("/create")}>Create city</MyButton>
         </div>
         <span className="cities__main--span">
-          Showing {currentPage}-{totalPageCount} of {cities.length} items.
+          Showing {currentPage}-{totalPageCount} of {dataCity.length} items.
         </span>
         <table className="cities__main__list">
           <thead>
@@ -52,23 +79,28 @@ const CityList = () => {
           <tbody>
             {currentTableData.map((city, index) => (
               <tr key={index}>
-                <td>{city.id}</td>
+                <td>{index}</td>
                 <td>{city.name}</td>
                 <td>{city.province}</td>
                 <td>{city.country}</td>
                 <td>
-                  <i
-                    className="bi bi-eye"
-                    onClick={() => navigate(`/detail/${city.id}`)}
-                  ></i>
-                  <i
-                    className="bi bi-pencil"
-                    onClick={() => navigate(`/update/${city.id}`)}
-                  ></i>
-                  <i
-                    className="bi bi-trash"
-                    onClick={() => deleteCity(city.id)}
-                  ></i>
+                  <img
+                    src={detailIcon}
+                    alt=""
+                    onClick={() => navigate(`/detail/${city._id}`)}
+                  />
+                  <img
+                    src={updateIcon}
+                    alt=""
+                    onClick={() => navigate(`/update/${city._id}`)}
+                  />
+                  <img
+                    src={deleteIcon}
+                    alt=""
+                    onClick={() => {
+                      handleDeleteCity(city._id);
+                    }}
+                  />
                 </td>
               </tr>
             ))}
@@ -78,8 +110,8 @@ const CityList = () => {
           <Pagination
             className="pagination-bar"
             currentPage={currentPage}
-            totalCount={cities.length}
-            pageSize={PageSize}
+            totalCount={dataCity.length}
+            pageSize={DEFAULT_PAGE_SIZE}
             onPageChange={(page) => setCurrentPage(page)}
           />
         </div>

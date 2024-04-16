@@ -49,14 +49,15 @@
             background-color: rgba(249, 249, 249, 1);
         }
 
-        & td i {
+        & td img {
             padding: 3px;
             color: rgba(47, 128, 237, 1);
             cursor: pointer;
+            transition-duration: 0.5s;
         }
 
-        & td i:hover {
-            color: rgba(217, 83, 79, 1);
+        & td img:hover {
+            transform: translateY(-5px);
         }
     }
 

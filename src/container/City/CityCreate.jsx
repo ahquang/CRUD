@@ -6,35 +6,32 @@ import Layout from "../../components/Layout/index.jsx";
 import PageBar from "../../components/PageBar/index.jsx";
 import MyForm from "../../components/MyForm/index.jsx";
 import "../../styles/pages/_cities.scss";
+import { handlePostDataToAPI } from "../../utils/handleAPIServices.js";
 
 const CityCreate = () => {
   let navigate = useNavigate();
 
-  const { addCity, cities } = useContext(GlobalContext);
+  // const { addCity } = useContext(GlobalContext);
+  const [page] = useState(["Home /", "Cities /", "Create City"]);
 
-  const [newCity, setNewCity] = useState({
-    id: cities.length + 1,
-    name: "",
-    province: "",
-    country: "",
-  });
+  const handleClickPageBar = (e) => {
+    navigate('/');
+  }
 
-  const handleAddCity = (e) => {
-    e.preventDefault();
-    addCity(newCity);
+  const handleAddCity = (newCity) => {
+    // addCity(newCity);
+    handlePostDataToAPI(newCity);
     navigate("/list");
   };
   
   return (
     <Layout>
       <div className="cities__main">
-        <PageBar>
-          <span>Home / Cities / Create City</span>
-        </PageBar>
+        <PageBar page={page} handleOnClick={handleClickPageBar}/>
         <div className="cities__main__title">
           <h1>Create City</h1>
         </div>
-        <MyForm dataCity={newCity} setDataCity={setNewCity} onSubmit={handleAddCity}/>
+        <MyForm onSubmit={handleAddCity}/>
       </div>
     </Layout>
   );

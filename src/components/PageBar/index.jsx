@@ -1,12 +1,27 @@
-import React from 'react'
-import '../../styles/components/_pagebar.scss'
+import React from "react";
+import "../../styles/components/_pagebar.scss";
 
-const PageBar = ({children}) => {
+const PageBar = ({ page = [], handleOnClick }) => {
   return (
     <div className="page-bar">
-          {children}
+      <ul>
+        {page.map((item, index) => {
+          let disabled = index === page.length - 1 ? "disabled" : "";
+          return (
+            <li key={index}>
+              <button
+                className={disabled}
+                onClick={handleOnClick}
+                disabled={disabled}
+              >
+                {item}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default PageBar
+export default PageBar;
