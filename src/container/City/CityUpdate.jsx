@@ -10,8 +10,8 @@ import { handleUpdateDataToAPI } from "../../utils/handleAPIServices.js";
 import { API_KEY } from "../../constants/index.js";
 
 const CityUpdate = () => {
-  let navigate = useNavigate();
-  let params = useParams();
+  const navigate = useNavigate();
+  const params = useParams();
   // const { updateCity, cities } = useContext(GlobalContext);
 
   const [selectedCity, setSelectedCity] = useState([]);
@@ -56,7 +56,7 @@ const CityUpdate = () => {
     // updateCity(selectedCity);
     handleUpdateDataToAPI(updatedCity,selectedCity._id)
     console.log('abc' + updatedCity);
-    navigate("/list");
+    navigate("/city/list");
   };
 
   const selectedCityRemoveId = Object.fromEntries(Object.entries(selectedCity).slice(1));

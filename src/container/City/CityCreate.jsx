@@ -6,10 +6,10 @@ import Layout from "../../components/Layout/index.jsx";
 import PageBar from "../../components/PageBar/index.jsx";
 import MyForm from "../../components/MyForm/index.jsx";
 import "../../styles/pages/_cities.scss";
-import { handlePostDataToAPI } from "../../utils/handleAPIServices.js";
+import { postCityAPI } from "../../services/cities.js";
 
 const CityCreate = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const { addCity } = useContext(GlobalContext);
   const [page] = useState(["Home /", "Cities /", "Create City"]);
@@ -18,10 +18,10 @@ const CityCreate = () => {
     navigate('/');
   }
 
-  const handleAddCity = (newCity) => {
+  const handleAddCity = async (newCity) => {
     // addCity(newCity);
-    handlePostDataToAPI(newCity);
-    navigate("/list");
+    await postCityAPI(newCity);
+    navigate("/city/list");
   };
   
   return (

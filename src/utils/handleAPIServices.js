@@ -5,18 +5,18 @@ export const handleDeleteDataFromAPI = async (id) => {
     headers: { "Content-Type": "application/json" },
   };
   await fetch(
-    `https://crudcrud.com/api/${API_KEY}/cities2/${id}`,
+    `${process.env.REACT_APP_CITY_BASE_URL}/cities2/${id}`,
     requestOptions
   );
 };
 
-export const handlePostDataToAPI = (data) => {
+export const handlePostDataToAPI = async (data) => {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
-  fetch(`https://crudcrud.com/api/${API_KEY}/cities2`, requestOptions)
+  await fetch(`${process.env.REACT_APP_CITY_BASE_URL}/cities2`, requestOptions)
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((error) => console.log(error));

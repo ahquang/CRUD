@@ -6,7 +6,7 @@ const PageBar = ({ page = [], handleOnClick }) => {
     <div className="page-bar">
       <ul>
         {page.map((item, index) => {
-          let disabled = index === page.length - 1 ? "disabled" : "";
+          const disabled = index === page.length - 1 ? "disabled" : "";
           return (
             <li key={index}>
               <button

@@ -10,8 +10,8 @@ import { handleDeleteDataFromAPI } from "../../utils/handleAPIServices.js";
 import { API_KEY } from "../../constants/index.js";
 
 const CityDetail = () => {
-  let navigate = useNavigate();
-  let params = useParams();
+  const navigate = useNavigate();
+  const params = useParams();
   // const { cities, deleteCity } = useContext(GlobalContext);
 
   const [selectedCity, setSelectedCity] = useState([]);
@@ -45,7 +45,7 @@ const CityDetail = () => {
 
   const handleDeleteBtn = () => {
     handleDeleteDataFromAPI(selectedCity._id);
-    navigate("/list");
+    navigate("/city/list");
   };
   const page = ["Home /", "Cities /", selectedCity.name];
 
@@ -68,7 +68,7 @@ const CityDetail = () => {
           <div className="cities__main__detail__btn">
             <MyButton
               className="cities__main__detail__btn__update"
-              onClick={() => navigate(`/update/${selectedCity._id}`)}
+              onClick={() => navigate(`/city/update/${selectedCity._id}`)}
             >
               Update
             </MyButton>

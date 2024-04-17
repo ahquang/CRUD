@@ -12,26 +12,23 @@ import detailIcon from "../../assets/visibility_24px.svg";
 import deleteIcon from "../../assets/delete_24px.svg";
 import updateIcon from "../../assets/create_24px.svg";
 import { handleDeleteDataFromAPI } from "../../utils/handleAPIServices.js";
+import { getCityListAPI } from "../../services/cities.js";
 
 const CityList = () => {
   const navigate = useNavigate();
   // const { cities, deleteCity } = useContext(GlobalContext);
   const [dataCity, setDataCity] = useState([]);
 
-  const fetchData = async () => {
-    const requestOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
-    await fetch(`https://crudcrud.com/api/${API_KEY}/cities2`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setDataCity(data))
-      .catch((error) => console.log(error));
+  const fetchData =  () => {
+    getCityListAPI()
+    .then((response) => response.json())
+    .then((data) => setDataCity(data))
+    .catch((error) => console.log(error))
     return dataCity;
   };
-
+  
   useEffect(() => {
-    fetchData();
+   fetchData()
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,7 +58,7 @@ const CityList = () => {
           <h1>Cities</h1>
         </div>
         <div className="cities__main--btn">
-          <MyButton onClick={() => navigate("/create")}>Create city</MyButton>
+          <MyButton onClick={() => navigate("/city/create")}>Create city</MyButton>
         </div>
         <span className="cities__main--span">
           Showing {currentPage}-{totalPageCount} of {dataCity.length} items.
@@ -87,12 +84,12 @@ const CityList = () => {
                   <img
                     src={detailIcon}
                     alt=""
-                    onClick={() => navigate(`/detail/${city._id}`)}
+                    onClick={() => navigate(`/city/detail/${city._id}`)}
                   />
                   <img
                     src={updateIcon}
                     alt=""
-                    onClick={() => navigate(`/update/${city._id}`)}
+                    onClick={() => navigate(`/city/update/${city._id}`)}
                   />
                   <img
                     src={deleteIcon}
