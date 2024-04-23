@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalState.js";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import Layout from "../../components/Layout/index.jsx";
 import PageBar from "../../components/PageBar/index.jsx";
 import MyButton from "../../components/MyButton/index.jsx";
 import "../../styles/pages/_cities.scss";
-import { handleDeleteDataFromAPI } from "../../utils/handleAPIServices.js";
-import { API_KEY } from "../../constants/index.js";
+import { deleteCityAPI, getCityDetailAPI } from "../../services/cities.js";
 
 const CityDetail = () => {
   const navigate = useNavigate();
@@ -18,15 +16,8 @@ const CityDetail = () => {
   const currentCityId = params.id;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      await fetch(
-        `https://crudcrud.com/api/${API_KEY}/cities2/${currentCityId}`,
-        requestOptions
-      )
+    const fetchData = () => {
+     getCityDetailAPI(currentCityId)
         .then((response) => response.json())
         .then((data) => setSelectedCity(data))
         .catch((error) => console.log(error));
@@ -34,6 +25,8 @@ const CityDetail = () => {
     };
     fetchData();
   }, []);
+
+  console.log(selectedCity);
 
   // useEffect(() => {
   //   const cityId = currentCityId;
@@ -44,7 +37,7 @@ const CityDetail = () => {
   // }, [currentCityId, cities]);
 
   const handleDeleteBtn = () => {
-    handleDeleteDataFromAPI(selectedCity._id);
+    deleteCityAPI(selectedCity._id);
     navigate("/city/list");
   };
   const page = ["Home /", "Cities /", selectedCity.name];

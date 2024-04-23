@@ -18,6 +18,7 @@ const MyForm = ({ selectedCity, onSubmit }) => {
   };
 
   const handleClickSubmit = (e) => {
+    e.preventDefault();
     onSubmit(dataCity);
   };
 

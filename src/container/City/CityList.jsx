@@ -11,35 +11,34 @@ import { GlobalContext } from "../../context/GlobalState.js";
 import detailIcon from "../../assets/visibility_24px.svg";
 import deleteIcon from "../../assets/delete_24px.svg";
 import updateIcon from "../../assets/create_24px.svg";
-import { handleDeleteDataFromAPI } from "../../utils/handleAPIServices.js";
-import { getCityListAPI } from "../../services/cities.js";
+import { deleteCityAPI, getCityListAPI } from "../../services/cities.js";
 
 const CityList = () => {
   const navigate = useNavigate();
   // const { cities, deleteCity } = useContext(GlobalContext);
   const [dataCity, setDataCity] = useState([]);
 
-  const fetchData =  () => {
+  const fetchData = () => {
     getCityListAPI()
-    .then((response) => response.json())
-    .then((data) => setDataCity(data))
-    .catch((error) => console.log(error))
+      .then((response) => response.json())
+      .then((data) => setDataCity(data))
+      .catch((error) => console.log(error));
     return dataCity;
   };
-  
+
   useEffect(() => {
-   fetchData()
+    fetchData();
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [page] = useState(["Home /", "Cities"]);
+  const page = ["Home /", "Cities"];
 
   const handleClickPageBar = (e) => {
     navigate("/");
   };
 
   const handleDeleteCity = async (id) => {
-    await handleDeleteDataFromAPI(id);
+    await deleteCityAPI(id);
     fetchData();
   };
   const totalPageCount = Math.ceil(dataCity.length / DEFAULT_PAGE_SIZE);
@@ -58,7 +57,9 @@ const CityList = () => {
           <h1>Cities</h1>
         </div>
         <div className="cities__main--btn">
-          <MyButton onClick={() => navigate("/city/create")}>Create city</MyButton>
+          <MyButton onClick={() => navigate("/city/create")}>
+            Create city
+          </MyButton>
         </div>
         <span className="cities__main--span">
           Showing {currentPage}-{totalPageCount} of {dataCity.length} items.

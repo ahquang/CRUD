@@ -4,10 +4,9 @@ import { GlobalContext } from "../../context/GlobalState.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Layout from "../../components/Layout/index.jsx";
 import PageBar from "../../components/PageBar/index.jsx";
-import MyForm from "../../components/MyForm/index.jsx";
+import CityForm from "../../components/CityForm/index.jsx";
 import "../../styles/pages/_cities.scss";
-import { handleUpdateDataToAPI } from "../../utils/handleAPIServices.js";
-import { API_KEY } from "../../constants/index.js";
+import { getCityDetailAPI, updateCityAPI } from "../../services/cities.js";
 
 const CityUpdate = () => {
   const navigate = useNavigate();
@@ -19,19 +18,10 @@ const CityUpdate = () => {
   const currentCityId = params.id;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      await fetch(
-        `https://crudcrud.com/api/${API_KEY}/cities2/${currentCityId}`,
-        requestOptions
-      )
+    const fetchData = () => {
+     getCityDetailAPI(currentCityId)
         .then((response) => response.json())
-        .then((data) => 
-          setSelectedCity(data)
-        )
+        .then((data) => setSelectedCity(data))
         .catch((error) => console.log(error));
       return selectedCity;
     };
@@ -54,7 +44,7 @@ const CityUpdate = () => {
 
   const handleUpdateCity = (updatedCity) => {
     // updateCity(selectedCity);
-    handleUpdateDataToAPI(updatedCity,selectedCity._id)
+    updateCityAPI(updatedCity,selectedCity._id)
     console.log('abc' + updatedCity);
     navigate("/city/list");
   };
@@ -72,7 +62,7 @@ const CityUpdate = () => {
         <div className="cities__main__title">
           <h1>Update City</h1>
         </div>
-        <MyForm selectedCity={selectedCityRemoveId} onSubmit={handleUpdateCity}/>
+        <CityForm selectedCity={selectedCityRemoveId} onSubmit={handleUpdateCity}/>
       </div>
     </Layout>
   );
